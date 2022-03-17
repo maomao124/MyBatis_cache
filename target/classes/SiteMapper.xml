@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="SiteMapper">
+
+    <!--eviction:缓存回收策略
+        LRU：使用较少，移除最长时间不用的对象；
+        FIFO：先进先出，按对象进入缓存的顺序来移除它们；
+        SOFT：软引用，移除基于垃圾回收器状态和软引用规则的对象；
+        WEAK：弱引用，更积极地移除基于垃圾收集器状态和弱引用规则的对象。-->
+    <!--flushInterval:刷新间隔时间，单位为毫秒,如果省略该配置，那么只有当 SQL 被执行的时候才会刷新缓存-->
+    <!--size:引用数目，正整数，代表缓存最多可以存储多少个对象,设置过大会导致内存溢出-->
+    <!--readOnly:只读，默认值为 false，意味着缓存数据只能读取而不能修改-->
+    <!--type:用于指定缓存的实现类型，默认值：PERPETUAL-->
+    <!--blocking:阻塞，默认值为false。当指定为true时将采用BlockingCache进行封装。
+        使用BlockingCache会在查询缓存时锁住对应的Key，如果缓存命中了则会释放对应的锁，
+        否则会在查询数据库以后再释放锁，这样可以阻止并发情况下多个线程同时查询数据-->
+    <cache eviction="FIFO" flushInterval="120000" size="256" readOnly="false" type="PERPETUAL" blocking="false"/>
+
+
+    <select id="selectAll" resultType="Site">
+        select *
+        from website
+    </select>
+</mapper>
